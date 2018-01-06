@@ -2,6 +2,9 @@
 
 [![Join chat](https://img.shields.io/badge/gitter-join_chat-blue.svg?style=flat)](https://gitter.im/wowserhq/wowser)
 
-StormLib for Javascript, powered by Emscripten.
+[StormLib](http://www.zezula.net/en/mpq/stormlib.html) for Javascript, powered by Emscripten.
 
-Licensed under the **MIT** license, see LICENSE for more information.
+StormJS is licensed under the **MIT** license, see LICENSE for more information.
+
+StormLib is licensed under the **MIT** license, see src/vendor/StormLib/LICENSE for more
+information.
