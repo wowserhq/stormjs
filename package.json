@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "StormLib for Javascript, powered by Emscripten",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
