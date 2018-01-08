@@ -14,5 +14,9 @@
     "wowser"
   ],
   "author": "Wowser Contributors",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "fs-extra": "^5.0.0",
+    "webpack": "^3.10.0"
+  }
 }
