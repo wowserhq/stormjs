@@ -4,6 +4,18 @@ class MPQ {
   constructor(handle) {
     this.handle = handle;
   }
+
+  close() {
+    if (this.handle) {
+      if (StormLib.SFileCloseArchive(this.handle)) {
+        this.handle.delete();
+        this.handle = null;
+      } else {
+        const errno = StormLib.GetLastError();
+        throw new Error(`Archive could not be closed (error ${errno})`);
+      }
+    }
+  }
 }
 
 MPQ.open = async function (path, flags = 0) {
