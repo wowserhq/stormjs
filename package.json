@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "build:stormlib": "node src/build/stormlib.js",
+    "build:webpack": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "github:wowserhq/wowser-math",
