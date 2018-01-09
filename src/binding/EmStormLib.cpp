@@ -20,6 +20,10 @@ bool EmSFileOpenArchive(const std::string& sMpqName, uint32_t uPriority, uint32_
   return SFileOpenArchive(sMpqName.c_str(), uPriority, uFlags, &pMpq.ptr);
 }
 
+bool EmSFileCloseArchive(EmPtr& pMpq) {
+  return SFileCloseArchive(pMpq.ptr);
+}
+
 EMSCRIPTEN_BINDINGS(EmStormLib) {
   class_<EmPtr>("Ptr")
     .constructor()
@@ -27,6 +31,7 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
     .function("nullify", &EmPtr::nullify);
 
   function("SFileOpenArchive", &EmSFileOpenArchive);
+  function("SFileCloseArchive", &EmSFileCloseArchive);
 
   function("GetLastError", &GetLastError);
 }
