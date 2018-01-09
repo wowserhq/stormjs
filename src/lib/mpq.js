@@ -15,7 +15,8 @@ MPQ.open = async function (path, flags = 0) {
   if (StormLib.SFileOpenArchive(path, priority, flags, handle)) {
     const mpq = new MPQ(handle);
   } else {
-    throw 'Could not open MPQ!';
+    const errno = StormLib.GetLastError();
+    throw new Error(`Archive could not be opened (error ${errno})`);
   }
 }
 
