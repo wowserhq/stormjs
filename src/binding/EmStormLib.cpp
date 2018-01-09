@@ -24,6 +24,10 @@ bool EmSFileCloseArchive(EmPtr& pMpq) {
   return SFileCloseArchive(pMpq.ptr);
 }
 
+bool EmSFileHasFile(EmPtr& pMpq, const std::string& sFileName) {
+  return SFileHasFile(pMpq.ptr, sFileName.c_str());
+}
+
 EMSCRIPTEN_BINDINGS(EmStormLib) {
   class_<EmPtr>("Ptr")
     .constructor()
@@ -32,6 +36,7 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
 
   function("SFileOpenArchive", &EmSFileOpenArchive);
   function("SFileCloseArchive", &EmSFileCloseArchive);
+  function("SFileHasFile", &EmSFileHasFile);
 
   function("GetLastError", &GetLastError);
 }
