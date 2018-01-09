@@ -7,6 +7,7 @@
     "dist"
   ],
   "scripts": {
+    "build": "npm run build:stormlib && npm run build:webpack",
     "build:stormlib": "node src/build/stormlib.js",
     "build:webpack": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
