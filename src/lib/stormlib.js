@@ -1,10 +1,10 @@
 const StormLib = require('stormlib');
 
-let resolveInit, rejectInit;
+let resolveReady, rejectReady;
 
-const init = new Promise((resolve, reject) => {
-  resolveInit = resolve;
-  rejectInit = reject;
+const ready = new Promise((resolve, reject) => {
+  resolveReady = resolve;
+  rejectReady = reject;
 });
 
 const library = StormLib({
@@ -16,10 +16,10 @@ const library = StormLib({
       console.info('Initialized StormLib in debug mode');
     }
 
-    resolveInit(library);
+    resolveReady(library);
   }
 });
 
-library.init = init;
+library.ready = ready;
 
 module.exports = library;

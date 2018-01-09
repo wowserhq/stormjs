@@ -7,7 +7,7 @@ class MPQ {
 }
 
 MPQ.open = async function (path) {
-  await StormLib.init;
+  await StormLib.ready;
 
   const handle = new StormLib.Ptr();
 
