@@ -27,4 +27,6 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
     .function("nullify", &EmPtr::nullify);
 
   function("SFileOpenArchive", &EmSFileOpenArchive);
+
+  function("GetLastError", &GetLastError);
 }
