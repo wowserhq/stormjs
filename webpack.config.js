@@ -6,20 +6,26 @@ const debug = {
 
   output: {
     filename: 'stormjs.debug.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist/standalone'),
     library: 'StormJS',
     libraryTarget: 'umd'
   },
 
   resolve: {
     alias: {
-      'stormlib': path.resolve(__dirname, 'build/stormlib.debug.js')
+      './stormlib.debug.js': path.resolve(__dirname, 'build/stormlib.debug.js')
     }
   },
 
   module: {
     noParse: /stormlib\.debug\.js/
-  }
+  },
+
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"development"'
+    })
+  ]
 };
 
 const release = {
@@ -27,14 +33,14 @@ const release = {
 
   output: {
     filename: 'stormjs.release.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist/standalone'),
     library: 'StormJS',
     libraryTarget: 'umd'
   },
 
   resolve: {
     alias: {
-      'stormlib': path.resolve(__dirname, 'build/stormlib.release.js')
+      './stormlib.release.js': path.resolve(__dirname, 'build/stormlib.release.js')
     }
   },
 
