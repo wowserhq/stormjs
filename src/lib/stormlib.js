@@ -1,4 +1,10 @@
-const StormLib = require('stormlib');
+let StormLib;
+
+if (process.env.NODE_ENV === 'production') {
+  StormLib = require('./stormlib.release.js');
+} else {
+  StormLib = require('./stormlib.debug.js');
+}
 
 let resolveReady, rejectReady;
 
