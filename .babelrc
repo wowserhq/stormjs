@@ -1,14 +1,29 @@
 {
-  "presets": [
-    ["env", {
-      "targets": {
-        "node": "8.7",
-        "browsers": [
-          "last 2 versions",
-          "not ie 1-11",
-          "not android 1-62"
-        ]
-      }
-    }]
-  ]
+  "env": {
+    "cjs": {
+      "presets": [
+        ["@babel/preset-env", {
+          "targets": {
+            "node": "8.7"
+          }
+        }]
+      ]
+    },
+
+    "esm": {
+      "presets": [
+        ["@babel/preset-env", {
+          "targets": {
+            "node": "8.7",
+            "browsers": [
+              "last 2 versions",
+              "not ie 1-11",
+              "not android 1-62"
+            ]
+          },
+          "modules": false
+        }]
+      ]
+    }
+  }
 }

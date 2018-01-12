@@ -2,14 +2,15 @@
   "name": "stormjs",
   "version": "0.1.0",
   "description": "StormLib for Javascript, powered by Emscripten",
-  "main": "dist/package/index.js",
+  "main": "dist/index",
   "files": [
-    "dist/package"
+    "dist"
   ],
   "scripts": {
-    "build": "npm run build:stormlib && npm run build:package",
+    "build": "npm run build:stormlib && npm run build:cjs && npm run build:esm",
     "build:stormlib": "node src/build/stormlib.js",
-    "build:package": "cpx \"build/stormlib.*.js\" dist/package && babel src/lib --out-dir dist/package",
+    "build:cjs": "cpx \"build/stormlib.*.js\" dist/ && BABEL_ENV=cjs babel src/lib/ --out-dir dist/",
+    "build:esm": "cpx \"build/stormlib.*.js\" dist/ && BABEL_ENV=esm babel src/lib/ --out-dir dist/ --keep-file-extension",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "github:wowserhq/wowser-math",
