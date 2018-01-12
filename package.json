@@ -7,10 +7,9 @@
     "dist/package"
   ],
   "scripts": {
-    "build": "npm run build:stormlib && npm run build:webpack",
+    "build": "npm run build:stormlib && npm run build:package",
     "build:stormlib": "node src/build/stormlib.js",
     "build:package": "cpx \"build/stormlib.*.js\" dist/package && babel src/lib --out-dir dist/package",
-    "build:standalone": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "github:wowserhq/wowser-math",
@@ -27,7 +26,6 @@
     "@babel/core": "^7.0.0-beta.37",
     "@babel/preset-env": "^7.0.0-beta.37",
     "cpx": "^1.5.0",
-    "fs-extra": "^5.0.0",
-    "webpack": "^3.10.0"
+    "fs-extra": "^5.0.0"
   }
 }
