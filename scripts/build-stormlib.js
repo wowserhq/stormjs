@@ -1,7 +1,9 @@
 const path = require('path');
 const util = require('util');
+const process = require('process');
 const child_process = require('child_process');
 const fs = require('fs-extra');
+const commandExists = require('command-exists');
 
 const exec = util.promisify(child_process.exec);
 
@@ -13,7 +15,8 @@ async function build() {
 
   console.info(`Build root: ${buildRoot}`);
 
-  console.info('');
+  await checkEnvironment();
+
   console.info('Setting up build root');
 
   await fs.emptydir(buildRoot);
@@ -34,6 +37,53 @@ async function build() {
 
   await buildDebug();
   await buildRelease();
+}
+
+function checkCommand(command) {
+  return new Promise(function (resolve, reject) {
+    commandExists(command, function(error, exists) {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(exists);
+      }
+    });
+  })
+}
+
+async function checkEnvironment() {
+  console.info('');
+  console.info('Checking environment');
+
+  const missing = [];
+
+  if (!await checkCommand('cmake')) {
+    missing.push('cmake');
+  }
+
+  if (!await checkCommand('make')) {
+    missing.push('make');
+  }
+
+  if (!await checkCommand('emcmake')) {
+    missing.push('emcmake');
+  }
+
+  if (!await checkCommand('emmake')) {
+    missing.push('emmake');
+  }
+
+  if (!await checkCommand('emcc')) {
+    missing.push('emcc');
+  }
+
+  if (missing.length > 0) {
+    console.error(`Missing commands: ${missing.join(' ')}`);
+    console.error('A build environment and Emscripten are required in order to build StormLib');
+    console.error('Exiting!');
+
+    process.exit(1);
+  }
 }
 
 async function buildDebug() {
