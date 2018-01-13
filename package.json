@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "build": "npm run build:stormlib && npm run build:cjs && npm run build:esm",
-    "build:stormlib": "node src/build/stormlib.js",
+    "build:stormlib": "node scripts/build-stormlib.js",
     "build:cjs": "cpx \"build/stormlib.*.js\" dist/ && BABEL_ENV=cjs babel src/lib/ --out-dir dist/",
     "build:esm": "cpx \"build/stormlib.*.js\" dist/ && BABEL_ENV=esm babel src/lib/ --out-dir dist/ --keep-file-extension",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -8,7 +8,7 @@ const exec = util.promisify(child_process.exec);
 async function build() {
   console.info('Building StormLib with Emscripten');
 
-  const root = path.resolve(__filename, '../../../');
+  const root = path.resolve(__filename, '../../');
   const buildRoot = path.resolve(root, './build');
 
   console.info(`Build root: ${buildRoot}`);
