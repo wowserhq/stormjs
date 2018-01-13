@@ -163,7 +163,8 @@ async function buildRelease() {
   const { makeOut, makeErr } = await emmake(makeTarget);
 
   const sharedCompileFlags = [
-    '-O2'
+    '-O1',
+    '--llvm-opts "[\'-O3\']"'
   ];
 
   console.info('Compiling bindings');
