@@ -1,11 +1,11 @@
 const path = require('path');
 const util = require('util');
 const process = require('process');
-const child_process = require('child_process');
+const childProcess = require('child_process');
 const fs = require('fs-extra');
 const commandExists = require('command-exists');
 
-const exec = util.promisify(child_process.exec);
+const exec = util.promisify(childProcess.exec);
 
 async function build() {
   console.info('Building StormLib with Emscripten');
@@ -48,7 +48,7 @@ function checkCommand(command) {
         resolve(exists);
       }
     });
-  })
+  });
 }
 
 async function checkEnvironment() {
