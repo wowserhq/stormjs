@@ -1,0 +1,6 @@
+/build/
+/dist/
+/node_modules/
+/src/binding/
+/src/override/
+/src/vendor/
