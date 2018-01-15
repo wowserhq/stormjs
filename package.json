@@ -13,6 +13,7 @@
     "build:esm": "cpx \"build/stormlib.*.js\" dist/ && BABEL_ENV=esm babel src/lib/ --out-dir dist/ --keep-file-extension",
     "lint": "eslint .",
     "precommit": "npm run lint",
+    "prepublishOnly": "npm run test && npm run build",
     "test": "npm run lint"
   },
   "repository": "github:wowserhq/wowser-math",
