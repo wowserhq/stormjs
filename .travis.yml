@@ -1,0 +1,22 @@
+sudo: false
+
+language: node_js
+
+script:
+  - npm run test && npm run build
+
+matrix:
+  fast_finish: true
+
+  include:
+    - os: linux
+      node_js: '8'
+      before_install:
+        - source ./.travis/prepare-linux.sh
+        - source ./.travis/prepare-emscripten.sh
+
+    - os: linux
+      node_js: '9'
+      before_install:
+        - source ./.travis/prepare-linux.sh
+        - source ./.travis/prepare-emscripten.sh
