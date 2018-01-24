@@ -9,12 +9,17 @@
   "scripts": {
     "build": "npm run build:stormlib && npm run build:cjs && npm run build:esm",
     "build:stormlib": "node scripts/build-stormlib.js",
-    "build:cjs": "cpx \"build/stormlib.*.js\" dist/ && BABEL_ENV=cjs babel src/lib/ --out-dir dist/",
-    "build:esm": "cpx \"build/stormlib.*.js\" dist/ && BABEL_ENV=esm babel src/lib/ --out-dir dist/ --keep-file-extension",
+    "build:cjs": "BABEL_ENV=cjs babel src/lib/ --out-dir dist/",
+    "build:esm": "BABEL_ENV=esm babel src/lib/ --out-dir dist/ --keep-file-extension",
+    "clean": "node scripts/clean.js",
     "lint": "eslint .",
     "precommit": "npm run lint",
-    "prepublishOnly": "npm run test && npm run build",
-    "test": "npm run lint"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm run test",
+    "release:major": "npm run clean && npm version major && npm publish && git push --follow-tags",
+    "release:minor": "npm run clean && npm version minor && npm publish && git push --follow-tags",
+    "release:patch": "npm run clean && npm version patch && npm publish && git push --follow-tags",
+    "test": "exit 0"
   },
   "repository": "github:wowserhq/stormjs",
   "keywords": [
