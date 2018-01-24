@@ -9,8 +9,8 @@ echo 'Installing and activating emscripten'
 
 source ~/emsdk-portable/emsdk_env.sh
 emsdk update
-emsdk install clang-e1.37.25-64bit emscripten-1.37.25
-emsdk activate clang-e1.37.25-64bit emscripten-1.37.25
+emsdk install clang-e1.37.28-64bit emscripten-1.37.28
+emsdk activate clang-e1.37.28-64bit emscripten-1.37.28
 
 source ~/emsdk-portable/emsdk_env.sh
 emcc --version
