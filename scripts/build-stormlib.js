@@ -7,36 +7,21 @@ const commandExists = require('command-exists');
 
 const exec = util.promisify(childProcess.exec);
 
+const root = path.resolve(__filename, '../../');
+
 async function build() {
   console.info('Building StormLib with Emscripten');
 
-  const root = path.resolve(__filename, '../../');
-  const buildRoot = path.resolve(root, './build');
-
-  console.info(`Build root: ${buildRoot}`);
-
   await checkEnvironment();
 
-  console.info('Setting up build root');
+  const buildRoot = path.resolve(root, './build');
+  const debugBuildRoot = path.resolve(buildRoot, './debug');
+  const releaseBuildRoot = path.resolve(buildRoot, './release');
 
-  await fs.emptydir(buildRoot);
-  await fs.rmdir(buildRoot);
-  await fs.mkdir(buildRoot);
+  const distDir = path.resolve(root, './dist');
 
-  console.info('Copying files into build root');
-
-  const vendorDir = path.resolve(root, './src/vendor');
-  const overrideDir = path.resolve(root, './src/override');
-  const bindingDir = path.resolve(root, './src/binding');
-
-  await fs.copy(`${vendorDir}/StormLib`, `${buildRoot}/StormLib`);
-  await fs.copy(`${overrideDir}/CMakeLists.txt`, `${buildRoot}/StormLib/CMakeLists.txt`);
-  await fs.copy(`${bindingDir}/EmStormLib.cpp`, `${buildRoot}/EmStormLib.cpp`);
-
-  process.chdir(buildRoot);
-
-  await buildDebug();
-  await buildRelease();
+  await buildDebug(debugBuildRoot, distDir);
+  await buildRelease(releaseBuildRoot, distDir);
 }
 
 function checkCommand(command) {
@@ -80,14 +65,34 @@ async function checkEnvironment() {
   if (missing.length > 0) {
     console.error(`Missing commands: ${missing.join(' ')}`);
     console.error('A build environment and Emscripten are required in order to build StormLib');
-    console.error('Exiting!');
+    console.error('Exiting with error code 1');
 
     process.exit(1);
   }
 }
 
-async function buildDebug() {
+async function setupBuildRoot(buildRoot) {
+  console.info(`Setting up build root: ${buildRoot}`);
+
+  await fs.mkdirp(buildRoot);
+
+  console.info('Copying files into build root');
+
+  const vendorDir = path.resolve(root, './src/vendor');
+  const overrideDir = path.resolve(root, './src/override');
+  const bindingDir = path.resolve(root, './src/binding');
+
+  await fs.copy(`${vendorDir}/StormLib`, `${buildRoot}/StormLib`);
+  await fs.copy(`${overrideDir}/CMakeLists.txt`, `${buildRoot}/StormLib/CMakeLists.txt`);
+  await fs.copy(`${bindingDir}/EmStormLib.cpp`, `${buildRoot}/EmStormLib.cpp`);
+}
+
+async function buildDebug(buildRoot, distDir) {
   console.info('Building debug build');
+
+  await setupBuildRoot(buildRoot);
+
+  process.chdir(buildRoot);
 
   console.info('Running cmake');
 
@@ -143,10 +148,20 @@ async function buildDebug() {
   ];
 
   const { wasmOut, wasmErr } = await emcc(wasmCompileFlags, wasmFiles);
+
+  console.info('Copying build artifact');
+
+  await fs.mkdirp(distDir);
+
+  await fs.copy(`${buildRoot}/stormlib.debug.js`, `${distDir}/stormlib.debug.js`);
 }
 
-async function buildRelease() {
+async function buildRelease(buildRoot, distDir) {
   console.info('Building release build');
+
+  await setupBuildRoot(buildRoot);
+
+  process.chdir(buildRoot);
 
   console.info('Running cmake');
 
@@ -201,6 +216,12 @@ async function buildRelease() {
   ];
 
   const { wasmOut, wasmErr } = await emcc(wasmCompileFlags, wasmFiles);
+
+  console.info('Copying build artifact');
+
+  await fs.mkdirp(distDir);
+
+  await fs.copy(`${buildRoot}/stormlib.release.js`, `${distDir}/stormlib.release.js`);
 }
 
 async function emcmake(flags = [], path = '.') {
@@ -232,6 +253,9 @@ async function buildSafely() {
     await build();
   } catch (e) {
     console.error(e);
+    console.error('Exiting with error code 1');
+
+    process.exit(1);
   }
 }
 
