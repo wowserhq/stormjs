@@ -19,7 +19,7 @@
     "release:major": "npm run clean && npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm run clean && npm version minor && npm publish && git push --follow-tags",
     "release:patch": "npm run clean && npm version patch && npm publish && git push --follow-tags",
-    "test": "exit 0"
+    "test": "jest --config .jestrc.json"
   },
   "repository": "github:wowserhq/stormjs",
   "keywords": [
@@ -34,6 +34,8 @@
     "@babel/cli": "^7.0.0-beta.38",
     "@babel/core": "^7.0.0-beta.38",
     "@babel/preset-env": "^7.0.0-beta.38",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^22.1.0",
     "command-exists": "^1.2.2",
     "cpx": "^1.5.0",
     "eslint": "^4.16.0",
