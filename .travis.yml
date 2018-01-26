@@ -5,6 +5,9 @@ language: node_js
 script:
   - npm run lint && npm run test
 
+after_script:
+  - source ./.travis/report-code-climate.sh
+
 matrix:
   fast_finish: true
 
@@ -14,9 +17,11 @@ matrix:
       before_install:
         - source ./.travis/prepare-linux.sh
         - source ./.travis/prepare-emscripten.sh
+        - source ./.travis/setup-code-climate.sh
 
     - os: linux
       node_js: '9'
       before_install:
         - source ./.travis/prepare-linux.sh
         - source ./.travis/prepare-emscripten.sh
+        - source ./.travis/setup-code-climate.sh
