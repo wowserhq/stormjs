@@ -1,5 +1,5 @@
 import path from 'path';
-import { FS, MPQ } from '../lib';
+import { File, FS, MPQ } from '../lib';
 import StormLib from '../lib/stormlib';
 
 const rootDir = path.resolve(__filename, '../../../');
@@ -56,6 +56,42 @@ describe('MPQ', () => {
       result = mpq.close();
 
       expect(result).toBeUndefined();
+    });
+  });
+
+  describe('Files', () => {
+    test('opens and returns a valid file', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+      const file = mpq.openFile('fixture.txt');
+
+      expect(file).toBeInstanceOf(File);
+
+      file.close();
+      mpq.close();
+    });
+
+    test('returns undefined if opening a file from a closed MPQ', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      mpq.close();
+
+      const file = mpq.openFile('fixture.txt');
+
+      expect(file).toBeUndefined();
+    });
+
+    test('throws if opening a nonexistent file', async () => {
+      expect.assertions(1);
+
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      try {
+        const file = mpq.openFile('nonexistent.txt');
+      } catch (err) {
+        expect(err).toBeInstanceOf(Error);
+      }
+
+      mpq.close();
     });
   });
 });

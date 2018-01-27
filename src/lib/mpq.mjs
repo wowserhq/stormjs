@@ -1,3 +1,4 @@
+import File from './file';
 import StormLib from './stormlib';
 
 class MPQ {
@@ -13,6 +14,21 @@ class MPQ {
       } else {
         const errno = StormLib.GetLastError();
         throw new Error(`Archive could not be closed (error ${errno})`);
+      }
+    }
+  }
+
+  openFile(fileName) {
+    if (this.handle) {
+      const fileHandle = new StormLib.Ptr();
+
+      if (StormLib.SFileOpenFileEx(this.handle, fileName, 0, fileHandle)) {
+        return new File(fileHandle);
+      } else {
+        fileHandle.delete();
+
+        const errno = StormLib.GetLastError();
+        throw new Error(`File could not be opened (error ${errno})`);
       }
     }
   }
