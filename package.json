@@ -12,7 +12,7 @@
     "build:cjs": "BABEL_ENV=cjs babel src/lib/ --out-dir dist/",
     "build:esm": "BABEL_ENV=esm babel src/lib/ --out-dir dist/ --keep-file-extension",
     "clean": "node scripts/clean.js",
-    "lint": "eslint .",
+    "lint": "eslint . --ext js,mjs",
     "precommit": "npm run lint",
     "prepare": "npm run build",
     "prepublishOnly": "npm run lint && npm run test",
