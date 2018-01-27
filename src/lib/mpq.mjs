@@ -30,6 +30,6 @@ MPQ.open = async function (path, flags = 0) {
     const errno = StormLib.GetLastError();
     throw new Error(`Archive could not be opened (error ${errno})`);
   }
-}
+};
 
 export default MPQ;
