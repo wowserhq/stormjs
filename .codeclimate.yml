@@ -6,6 +6,10 @@ exclude_paths:
   - src/spec/**/*
   - src/vendor/**/*
 
+plugins:
+  nodesecurity:
+    enabled: true
+
 checks:
   argument-count:
     enabled: false
