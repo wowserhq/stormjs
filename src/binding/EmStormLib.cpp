@@ -5,14 +5,16 @@ using namespace emscripten;
 
 class EmPtr {
   public:
-    void* ptr;
+    void* ptr = nullptr;
 
-    uint32_t toUint32() const {
-      return *(uint32_t*)ptr;
+    EmPtr() {}
+
+    size_t getAddr() const {
+      return (size_t)ptr;
     }
 
-    void nullify() {
-      ptr = nullptr;
+    bool isNull() const {
+      return ptr == nullptr;
     }
 };
 
@@ -39,8 +41,8 @@ bool EmSFileOpenFileEx(EmPtr& pMpq, const std::string& sFileName, uint32_t uSear
 EMSCRIPTEN_BINDINGS(EmStormLib) {
   class_<EmPtr>("Ptr")
     .constructor()
-    .function("toUint32", &EmPtr::toUint32)
-    .function("nullify", &EmPtr::nullify);
+    .function("getAddr", &EmPtr::getAddr)
+    .function("isNull", &EmPtr::isNull);
 
   function("GetLastError", &GetLastError);
 
