@@ -5,14 +5,33 @@ using namespace emscripten;
 
 class EmPtr {
   public:
-    void* ptr;
+    void* ptr = nullptr;
 
-    uint32_t toUint32() const {
-      return *(uint32_t*)ptr;
+    EmPtr() {}
+
+    size_t getAddr() const {
+      return (size_t)ptr;
     }
 
-    void nullify() {
-      ptr = nullptr;
+    bool isNull() const {
+      return ptr == nullptr;
+    }
+};
+
+class EmVoidPtr : public EmPtr {
+  public:
+    EmVoidPtr() : EmPtr() {}
+};
+
+class EmUint32Ptr : public EmPtr {
+  public:
+    EmUint32Ptr() : EmPtr() {
+      uint32_t value = 0;
+      ptr = &value;
+    }
+
+    uint32_t toJS() const {
+      return *(uint32_t*)ptr;
     }
 };
 
@@ -39,8 +58,15 @@ bool EmSFileOpenFileEx(EmPtr& pMpq, const std::string& sFileName, uint32_t uSear
 EMSCRIPTEN_BINDINGS(EmStormLib) {
   class_<EmPtr>("Ptr")
     .constructor()
-    .function("toUint32", &EmPtr::toUint32)
-    .function("nullify", &EmPtr::nullify);
+    .function("getAddr", &EmPtr::getAddr)
+    .function("isNull", &EmPtr::isNull);
+
+  class_<EmVoidPtr, base<EmPtr>>("VoidPtr")
+    .constructor();
+
+  class_<EmUint32Ptr, base<EmPtr>>("Uint32Ptr")
+    .constructor()
+    .function("toJS", &EmUint32Ptr::toJS);
 
   function("GetLastError", &GetLastError);
 

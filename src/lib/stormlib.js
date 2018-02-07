@@ -20,6 +20,9 @@ const library = StormLib({
     // Temporary workaround for emscripten pseudo-promise
     delete library.then;
 
+    // Add NULLPTR constant
+    library.NULLPTR = new library.Ptr();
+
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.info('Initialized StormLib in debug mode');
