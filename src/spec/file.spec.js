@@ -27,7 +27,7 @@ describe('File', () => {
       const file = mpq.openFile('fixture.txt');
 
       const originalHandle = file.handle;
-      const invalidHandle = new StormLib.Ptr();
+      const invalidHandle = new StormLib.VoidPtr();
 
       try {
         file.handle = invalidHandle;

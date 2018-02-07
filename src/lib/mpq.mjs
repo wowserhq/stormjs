@@ -20,7 +20,7 @@ class MPQ {
 
   openFile(fileName) {
     if (this.handle) {
-      const fileHandle = new StormLib.Ptr();
+      const fileHandle = new StormLib.VoidPtr();
 
       if (StormLib.SFileOpenFileEx(this.handle, fileName, 0, fileHandle)) {
         return new File(fileHandle);
@@ -37,7 +37,7 @@ class MPQ {
 MPQ.open = async function (path, flags = 0) {
   await StormLib.ready;
 
-  const handle = new StormLib.Ptr();
+  const handle = new StormLib.VoidPtr();
   const priority = 0;
 
   if (StormLib.SFileOpenArchive(path, priority, flags, handle)) {

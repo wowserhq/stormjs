@@ -18,6 +18,11 @@ class EmPtr {
     }
 };
 
+class EmVoidPtr : public EmPtr {
+  public:
+    EmVoidPtr() : EmPtr() {}
+};
+
 bool EmSFileCloseArchive(EmPtr& pMpq) {
   return SFileCloseArchive(pMpq.ptr);
 }
@@ -43,6 +48,9 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
     .constructor()
     .function("getAddr", &EmPtr::getAddr)
     .function("isNull", &EmPtr::isNull);
+
+  class_<EmVoidPtr, base<EmPtr>>("VoidPtr")
+    .constructor();
 
   function("GetLastError", &GetLastError);
 

@@ -34,7 +34,7 @@ describe('MPQ', () => {
 
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
       const originalHandle = mpq.handle;
-      const invalidHandle = new StormLib.Ptr();
+      const invalidHandle = new StormLib.VoidPtr();
 
       try {
         mpq.handle = invalidHandle;
