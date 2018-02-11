@@ -28,16 +28,18 @@ describe('File', () => {
   });
 
   describe('Closing', () => {
-    test('closes a valid file', async () => {
+    test('closes valid file', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
       const file = mpq.openFile('fixture.txt');
 
       const result = file.close();
 
       expect(result).toBeUndefined();
+
+      mpq.close();
     });
 
-    test('throws if closing a file with an invalid handle', async () => {
+    test('throws if closing file with invalid handle', async () => {
       expect.assertions(1);
 
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
@@ -46,19 +48,16 @@ describe('File', () => {
       const originalHandle = file.handle;
       const invalidHandle = new StormLib.VoidPtr();
 
-      try {
-        file.handle = invalidHandle;
-        file.close();
-      } catch (err) {
-        expect(err).toBeInstanceOf(Error);
-      } finally {
-        file.handle = originalHandle;
-        file.close();
-        mpq.close();
-      }
+      file.handle = invalidHandle;
+
+      expect(() => file.close()).toThrow(Error);
+
+      file.handle = originalHandle;
+      file.close();
+      mpq.close();
     });
 
-    test('noops if closing an already closed file', async () => {
+    test('noops if closing already closed file', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
       const file = mpq.openFile('fixture.txt');
 
