@@ -19,6 +19,8 @@ class MPQ {
   }
 
   find(mask, listfile = '') {
+    this._ensureHandle();
+
     const findData = new StormLib.SFileFindData();
 
     const findHandle = StormLib.SFileFindFirstFile(this.handle, mask, findData, listfile);
@@ -61,6 +63,12 @@ class MPQ {
         const errno = StormLib.GetLastError();
         throw new Error(`File could not be opened (error ${errno})`);
       }
+    }
+  }
+
+  _ensureHandle() {
+    if (!this.handle) {
+      throw new Error('Invalid handle');
     }
   }
 }

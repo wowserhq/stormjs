@@ -146,6 +146,14 @@ describe('MPQ', () => {
       mpq.close();
     });
 
+    test('throws if calling find on closed mpq', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      mpq.close();
+
+      expect(() => { mpq.find('*'); }).toThrow(Error);
+    });
+
     test('throws if calling find on mpq with invalid handle', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
