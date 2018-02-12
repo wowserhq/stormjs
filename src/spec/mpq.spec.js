@@ -116,6 +116,26 @@ describe('MPQ', () => {
       mpq.close();
     });
 
+    test('returns result with appropriate shape', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const result = mpq.find('fixture.txt')[0];
+
+      expect(result).toEqual({
+        'fileName': 'fixture.txt',
+        'plainName': 'fixture.txt',
+        'hashIndex': 3886,
+        'blockIndex': 0,
+        'fileSize': 13,
+        'compSize': 21,
+        'fileTimeLo': 414638976,
+        'fileTimeHi': 30643794,
+        'locale': 0
+      });
+
+      mpq.close();
+    });
+
     test('returns empty array if no results found', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
