@@ -25,7 +25,12 @@ class MPQ {
 
     if (findHandle.isNull()) {
       const errno = StormLib.GetLastError();
-      throw new Error(`Find failed (error ${errno})`);
+
+      if (errno === StormLib.ERROR_NO_MORE_FILES) {
+        return [];
+      } else {
+        throw new Error(`Find failed (error ${errno})`);
+      }
     }
 
     const results = [];

@@ -173,6 +173,7 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
   function("SFileReadFile", &EmSFileReadFile);
   function("SFileSetFilePointer", &EmSFileSetFilePointer);
 
+  constant("ERROR_NO_MORE_FILES", ERROR_NO_MORE_FILES);
   constant("FILE_BEGIN", FILE_BEGIN);
   constant("SFILE_INVALID_SIZE", SFILE_INVALID_SIZE);
 }

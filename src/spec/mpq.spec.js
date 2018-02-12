@@ -113,5 +113,15 @@ describe('MPQ', () => {
 
       mpq.close();
     });
+
+    test('returns empty array if no results found', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const results = mpq.find('foo-bar.baz');
+
+      expect(results).toEqual([]);
+
+      mpq.close();
+    });
   });
 });
