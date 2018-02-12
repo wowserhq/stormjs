@@ -101,6 +101,8 @@ describe('MPQ', () => {
 
       const results = mpq.find('*');
 
+      expect(results).toBeInstanceOf(Array);
+
       expect(results.map((r) => r.fileName)).toEqual([
         'fixture-deDE.txt',
         '(listfile)',
@@ -121,6 +123,20 @@ describe('MPQ', () => {
 
       expect(results).toEqual([]);
 
+      mpq.close();
+    });
+
+    test('throws if calling find on mpq with invalid handle', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const originalHandle = mpq.handle;
+      const invalidHandle = new StormLib.VoidPtr();
+
+      mpq.handle = invalidHandle;
+
+      expect(() => { mpq.find('*'); }).toThrow(Error);
+
+      mpq.handle = originalHandle;
       mpq.close();
     });
   });
