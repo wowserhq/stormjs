@@ -18,7 +18,7 @@ class MPQ {
     }
   }
 
-  find(mask, listfile = '') {
+  search(mask, listfile = '') {
     this._ensureHandle();
 
     const findData = new StormLib.SFileFindData();

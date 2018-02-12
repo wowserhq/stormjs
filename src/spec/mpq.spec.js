@@ -99,7 +99,7 @@ describe('MPQ', () => {
     test('finds all files', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
-      const results = mpq.find('*');
+      const results = mpq.search('*');
 
       expect(results).toBeInstanceOf(Array);
 
@@ -119,7 +119,7 @@ describe('MPQ', () => {
     test('returns result with appropriate shape', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
-      const result = mpq.find('fixture.txt')[0];
+      const result = mpq.search('fixture.txt')[0];
 
       expect(result).toEqual({
         'fileName': 'fixture.txt',
@@ -139,7 +139,7 @@ describe('MPQ', () => {
     test('returns empty array if no results found', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
-      const results = mpq.find('foo-bar.baz');
+      const results = mpq.search('foo-bar.baz');
 
       expect(results).toEqual([]);
 
@@ -151,7 +151,7 @@ describe('MPQ', () => {
 
       mpq.close();
 
-      expect(() => { mpq.find('*'); }).toThrow(Error);
+      expect(() => { mpq.search('*'); }).toThrow(Error);
     });
 
     test('throws if calling find on mpq with invalid handle', async () => {
@@ -162,7 +162,7 @@ describe('MPQ', () => {
 
       mpq.handle = invalidHandle;
 
-      expect(() => { mpq.find('*'); }).toThrow(Error);
+      expect(() => { mpq.search('*'); }).toThrow(Error);
 
       mpq.handle = originalHandle;
       mpq.close();
