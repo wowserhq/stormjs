@@ -94,4 +94,24 @@ describe('MPQ', () => {
       mpq.close();
     });
   });
+
+  describe('Search', () => {
+    test('finds all files', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const results = mpq.find('*');
+
+      expect(results.map((r) => r.fileName)).toEqual([
+        'fixture-deDE.txt',
+        '(listfile)',
+        'nested\\fixture-nested.txt',
+        'fixture.png',
+        '(attributes)',
+        'fixture.txt',
+        'fixture.xml'
+      ]);
+
+      mpq.close();
+    });
+  });
 });

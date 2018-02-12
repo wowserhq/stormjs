@@ -18,6 +18,32 @@ class MPQ {
     }
   }
 
+  find(mask, listfile = '') {
+    const findData = new StormLib.SFileFindData();
+
+    const findHandle = StormLib.SFileFindFirstFile(this.handle, mask, findData, listfile);
+
+    if (findHandle.isNull()) {
+      const errno = StormLib.GetLastError();
+      throw new Error(`Find failed (error ${errno})`);
+    }
+
+    const results = [];
+
+    results.push(findData.toJS());
+
+    while (StormLib.SFileFindNextFile(findHandle, findData)) {
+      results.push(findData.toJS());
+    }
+
+    StormLib.SFileFindClose(findHandle);
+
+    findData.delete();
+    findHandle.delete();
+
+    return results;
+  }
+
   openFile(fileName) {
     if (this.handle) {
       const fileHandle = new StormLib.VoidPtr();

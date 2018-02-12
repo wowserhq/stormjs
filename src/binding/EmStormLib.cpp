@@ -66,6 +66,44 @@ bool EmSFileCloseFile(EmPtr& pFile) {
   return SFileCloseFile(pFile.ptr);
 }
 
+bool EmSFileFindClose(EmPtr& pFind) {
+  return SFileFindClose(pFind.ptr);
+}
+
+EmPtr EmSFileFindFirstFile(EmPtr& pMpq, const std::string& sMask, SFILE_FIND_DATA& pFindFileData, const std::string& sListFile) {
+  EmPtr* pFind = new EmPtr;
+  pFind->ptr = SFileFindFirstFile(pMpq.ptr, sMask.c_str(), &pFindFileData, sListFile.c_str());
+  return *pFind;
+}
+
+std::string EmSFileFindDataGetFileName(const SFILE_FIND_DATA& data) {
+  return data.cFileName;
+}
+
+std::string EmSFileFindDataGetPlainName(const SFILE_FIND_DATA& data) {
+  return data.szPlainName;
+}
+
+val EmSFileFindDataToJS(const SFILE_FIND_DATA& data) {
+  val obj = val::object();
+
+  obj.set("fileName", val(data.cFileName));
+  obj.set("plainName", std::string(data.szPlainName));
+  obj.set("hashIndex", data.dwHashIndex);
+  obj.set("blockIndex", data.dwBlockIndex);
+  obj.set("fileSize", data.dwFileSize);
+  obj.set("compSize", data.dwCompSize);
+  obj.set("fileTimeLo", data.dwFileTimeLo);
+  obj.set("fileTimeHi", data.dwFileTimeHi);
+  obj.set("locale", data.lcLocale);
+
+  return obj;
+}
+
+bool EmSFileFindNextFile(EmPtr& pFind, SFILE_FIND_DATA& pFindFileData) {
+  return SFileFindNextFile(pFind.ptr, &pFindFileData);
+}
+
 uint32_t EmSFileGetFileSize(EmPtr& pFile, EmPtr& pFileSizeHigh) {
   return SFileGetFileSize(pFile.ptr, static_cast<uint32_t*>(pFileSizeHigh.ptr));
 }
@@ -108,10 +146,26 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
     .constructor()
     .function("toJS", &EmUint32Ptr::toJS);
 
+  class_<SFILE_FIND_DATA>("SFileFindData")
+    .constructor()
+    .property("fileName", &EmSFileFindDataGetFileName)
+    .property("plainName", &EmSFileFindDataGetPlainName)
+    .property("hashIndex", &SFILE_FIND_DATA::dwHashIndex)
+    .property("blockIndex", &SFILE_FIND_DATA::dwBlockIndex)
+    .property("fileSize", &SFILE_FIND_DATA::dwFileSize)
+    .property("compSize", &SFILE_FIND_DATA::dwCompSize)
+    .property("fileTimeLo", &SFILE_FIND_DATA::dwFileTimeLo)
+    .property("fileTimeHi", &SFILE_FIND_DATA::dwFileTimeHi)
+    .property("locale", &SFILE_FIND_DATA::lcLocale)
+    .function("toJS", &EmSFileFindDataToJS);
+
   function("GetLastError", &GetLastError);
 
   function("SFileCloseArchive", &EmSFileCloseArchive);
   function("SFileCloseFile", &EmSFileCloseFile);
+  function("SFileFindClose", &EmSFileFindClose);
+  function("SFileFindFirstFile", &EmSFileFindFirstFile);
+  function("SFileFindNextFile", &EmSFileFindNextFile);
   function("SFileGetFileSize", &EmSFileGetFileSize);
   function("SFileHasFile", &EmSFileHasFile);
   function("SFileOpenArchive", &EmSFileOpenArchive);
