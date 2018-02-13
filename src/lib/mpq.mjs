@@ -28,6 +28,9 @@ class MPQ {
     if (findHandle.isNull()) {
       const errno = StormLib.GetLastError();
 
+      findData.delete();
+      findHandle.delete();
+
       if (errno === StormLib.ERROR_NO_MORE_FILES) {
         return [];
       } else {
