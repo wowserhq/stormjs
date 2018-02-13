@@ -94,4 +94,78 @@ describe('MPQ', () => {
       mpq.close();
     });
   });
+
+  describe('Search', () => {
+    test('finds all files', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const results = mpq.search('*');
+
+      expect(results).toBeInstanceOf(Array);
+
+      expect(results.map((r) => r.fileName)).toEqual([
+        'fixture-deDE.txt',
+        '(listfile)',
+        'nested\\fixture-nested.txt',
+        'fixture.png',
+        '(attributes)',
+        'fixture.txt',
+        'fixture.xml'
+      ]);
+
+      mpq.close();
+    });
+
+    test('returns result with appropriate shape', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const result = mpq.search('fixture.txt')[0];
+
+      expect(result).toEqual({
+        fileName: 'fixture.txt',
+        plainName: 'fixture.txt',
+        hashIndex: 3886,
+        blockIndex: 0,
+        fileSize: 13,
+        compSize: 21,
+        fileTimeLo: 414638976,
+        fileTimeHi: 30643794,
+        locale: 0
+      });
+
+      mpq.close();
+    });
+
+    test('returns empty array if no results found', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const results = mpq.search('foo-bar.baz');
+
+      expect(results).toEqual([]);
+
+      mpq.close();
+    });
+
+    test('throws if calling find on closed mpq', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      mpq.close();
+
+      expect(() => mpq.search('*')).toThrow(Error);
+    });
+
+    test('throws if calling find on mpq with invalid handle', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const originalHandle = mpq.handle;
+      const invalidHandle = new StormLib.VoidPtr();
+
+      mpq.handle = invalidHandle;
+
+      expect(() => mpq.search('*')).toThrow(Error);
+
+      mpq.handle = originalHandle;
+      mpq.close();
+    });
+  });
 });

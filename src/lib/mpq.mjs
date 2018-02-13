@@ -18,6 +18,42 @@ class MPQ {
     }
   }
 
+  search(mask, listfile = '') {
+    this._ensureHandle();
+
+    const findData = new StormLib.SFileFindData();
+
+    const findHandle = StormLib.SFileFindFirstFile(this.handle, mask, findData, listfile);
+
+    if (findHandle.isNull()) {
+      const errno = StormLib.GetLastError();
+
+      findData.delete();
+      findHandle.delete();
+
+      if (errno === StormLib.ERROR_NO_MORE_FILES) {
+        return [];
+      } else {
+        throw new Error(`Find failed (error ${errno})`);
+      }
+    }
+
+    const results = [];
+
+    results.push(findData.toJS());
+
+    while (StormLib.SFileFindNextFile(findHandle, findData)) {
+      results.push(findData.toJS());
+    }
+
+    StormLib.SFileFindClose(findHandle);
+
+    findData.delete();
+    findHandle.delete();
+
+    return results;
+  }
+
   openFile(fileName) {
     if (this.handle) {
       const fileHandle = new StormLib.VoidPtr();
@@ -30,6 +66,12 @@ class MPQ {
         const errno = StormLib.GetLastError();
         throw new Error(`File could not be opened (error ${errno})`);
       }
+    }
+  }
+
+  _ensureHandle() {
+    if (!this.handle) {
+      throw new Error('Invalid handle');
     }
   }
 }
