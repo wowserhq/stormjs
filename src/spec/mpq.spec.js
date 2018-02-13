@@ -93,6 +93,49 @@ describe('MPQ', () => {
 
       mpq.close();
     });
+
+    test('checks for presence of file', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const result = mpq.hasFile('fixture.txt');
+
+      expect(result).toBe(true);
+
+      mpq.close();
+    });
+
+    test('checks for presence of nonexistent file', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const result = mpq.hasFile('foo-bar.baz');
+
+      expect(result).toBe(false);
+
+      mpq.close();
+    });
+
+    test('throws if checking for presence of file in closed MPQ', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      mpq.close();
+
+      expect(() => mpq.hasFile('foo-bar.baz')).toThrow(Error);
+    });
+
+    test('throws if checking for presence of file in MPQ with invalid handle', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
+      const originalHandle = mpq.handle;
+      const invalidHandle = new StormLib.VoidPtr();
+
+      mpq.handle = invalidHandle;
+
+      expect(() => mpq.hasFile('foo-bar.baz')).toThrow(Error);
+
+      invalidHandle.delete();
+      mpq.handle = originalHandle;
+      mpq.close();
+    });
   });
 
   describe('Search', () => {
