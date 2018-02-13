@@ -62,6 +62,7 @@ describe('File', () => {
       const file = mpq.openFile('fixture.txt');
 
       file.close();
+
       const result = file.close();
 
       expect(result).toBeUndefined();
@@ -75,9 +76,9 @@ describe('File', () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
       const file = mpq.openFile('fixture.txt');
 
-      const result = file.pos;
+      const pos = file.pos;
 
-      expect(result).toBe(0);
+      expect(pos).toBe(0);
 
       file.close();
       mpq.close();
@@ -88,9 +89,10 @@ describe('File', () => {
       const file = mpq.openFile('fixture.txt');
 
       file.pos = 1;
-      const result = file.pos;
 
-      expect(result).toBe(1);
+      const pos = file.pos;
+
+      expect(pos).toBe(1);
 
       file.close();
       mpq.close();
@@ -130,9 +132,9 @@ describe('File', () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
       const file = mpq.openFile('fixture.txt');
 
-      const result = file.size;
+      const size = file.size;
 
-      expect(result).toBe(13);
+      expect(size).toBe(13);
 
       file.close();
       mpq.close();
@@ -252,6 +254,7 @@ describe('File', () => {
         expect(error).toBeInstanceOf(Error);
 
         mpq.close();
+
         done();
       });
 
@@ -280,6 +283,7 @@ describe('File', () => {
         file.handle = originalHandle;
         file.close();
         mpq.close();
+
         done();
       });
 
@@ -306,6 +310,7 @@ describe('File', () => {
         file.handle = originalHandle;
         file.close();
         mpq.close();
+
         done();
       });
 

@@ -24,8 +24,8 @@ describe('MPQ', () => {
 
       try {
         const mpq = await MPQ.open('/fixture/nonexistent.mpq');
-      } catch (err) {
-        expect(err).toBeInstanceOf(Error);
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
       }
     });
 
@@ -33,27 +33,24 @@ describe('MPQ', () => {
       expect.assertions(1);
 
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
       const originalHandle = mpq.handle;
       const invalidHandle = new StormLib.VoidPtr();
 
-      try {
-        mpq.handle = invalidHandle;
-        mpq.close();
-      } catch (err) {
-        expect(err).toBeInstanceOf(Error);
-      } finally {
-        mpq.handle = originalHandle;
-        mpq.close();
-      }
+      mpq.handle = invalidHandle;
+
+      expect(() => mpq.close()).toThrow(Error);
+
+      mpq.handle = originalHandle;
+      mpq.close();
     });
 
     test('closes MPQ with noop if already closed', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
-      let result;
+      mpq.close();
 
-      result = mpq.close();
-      result = mpq.close();
+      const result = mpq.close();
 
       expect(result).toBeUndefined();
     });
@@ -62,6 +59,7 @@ describe('MPQ', () => {
   describe('Files', () => {
     test('opens and returns a valid file', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+
       const file = mpq.openFile('fixture.txt');
 
       expect(file).toBeInstanceOf(File);
@@ -85,11 +83,7 @@ describe('MPQ', () => {
 
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
-      try {
-        const file = mpq.openFile('nonexistent.txt');
-      } catch (err) {
-        expect(err).toBeInstanceOf(Error);
-      }
+      expect(() => mpq.openFile('nonexistent.txt')).toThrow(Error);
 
       mpq.close();
     });
