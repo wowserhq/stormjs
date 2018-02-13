@@ -74,20 +74,20 @@ class MPQ {
       throw new Error('Invalid handle');
     }
   }
-}
 
-MPQ.open = async function (path, flags = 0) {
-  await StormLib.ready;
+  static async open(path, flags = 0) {
+    await StormLib.ready;
 
-  const handle = new StormLib.VoidPtr();
-  const priority = 0;
+    const handle = new StormLib.VoidPtr();
+    const priority = 0;
 
-  if (StormLib.SFileOpenArchive(path, priority, flags, handle)) {
-    return new MPQ(handle);
-  } else {
-    const errno = StormLib.GetLastError();
-    throw new Error(`Archive could not be opened (error ${errno})`);
+    if (StormLib.SFileOpenArchive(path, priority, flags, handle)) {
+      return new MPQ(handle);
+    } else {
+      const errno = StormLib.GetLastError();
+      throw new Error(`Archive could not be opened (error ${errno})`);
+    }
   }
-};
+}
 
 export default MPQ;
