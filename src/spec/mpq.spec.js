@@ -122,15 +122,15 @@ describe('MPQ', () => {
       const result = mpq.search('fixture.txt')[0];
 
       expect(result).toEqual({
-        'fileName': 'fixture.txt',
-        'plainName': 'fixture.txt',
-        'hashIndex': 3886,
-        'blockIndex': 0,
-        'fileSize': 13,
-        'compSize': 21,
-        'fileTimeLo': 414638976,
-        'fileTimeHi': 30643794,
-        'locale': 0
+        fileName: 'fixture.txt',
+        plainName: 'fixture.txt',
+        hashIndex: 3886,
+        blockIndex: 0,
+        fileSize: 13,
+        compSize: 21,
+        fileTimeLo: 414638976,
+        fileTimeHi: 30643794,
+        locale: 0
       });
 
       mpq.close();
@@ -151,7 +151,7 @@ describe('MPQ', () => {
 
       mpq.close();
 
-      expect(() => { mpq.search('*'); }).toThrow(Error);
+      expect(() => mpq.search('*')).toThrow(Error);
     });
 
     test('throws if calling find on mpq with invalid handle', async () => {
@@ -162,7 +162,7 @@ describe('MPQ', () => {
 
       mpq.handle = invalidHandle;
 
-      expect(() => { mpq.search('*'); }).toThrow(Error);
+      expect(() => mpq.search('*')).toThrow(Error);
 
       mpq.handle = originalHandle;
       mpq.close();
