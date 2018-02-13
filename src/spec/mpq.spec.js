@@ -11,7 +11,7 @@ describe('MPQ', () => {
   });
 
   describe('Opening / Closing', () => {
-    test('opens and closes an MPQ', async () => {
+    test('opens and closes MPQ', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
       mpq.close();
@@ -19,7 +19,7 @@ describe('MPQ', () => {
       expect(mpq).toBeInstanceOf(MPQ);
     });
 
-    test('throws if opening a nonexistent MPQ', async () => {
+    test('throws if opening nonexistent MPQ', async () => {
       expect.assertions(1);
 
       try {
@@ -29,7 +29,7 @@ describe('MPQ', () => {
       }
     });
 
-    test('throws if closing an MPQ with an invalid handle', async () => {
+    test('throws if closing MPQ with invalid handle', async () => {
       expect.assertions(1);
 
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
@@ -57,7 +57,7 @@ describe('MPQ', () => {
   });
 
   describe('Files', () => {
-    test('opens and returns a valid file', async () => {
+    test('opens and returns valid file', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
       const file = mpq.openFile('fixture.txt');
@@ -68,7 +68,7 @@ describe('MPQ', () => {
       mpq.close();
     });
 
-    test('returns undefined if opening a file from a closed MPQ', async () => {
+    test('returns undefined if opening file from closed MPQ', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
       mpq.close();
@@ -78,7 +78,7 @@ describe('MPQ', () => {
       expect(file).toBeUndefined();
     });
 
-    test('throws if opening a nonexistent file', async () => {
+    test('throws if opening nonexistent file', async () => {
       expect.assertions(1);
 
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
@@ -132,7 +132,7 @@ describe('MPQ', () => {
     });
   });
 
-  describe('Search', () => {
+  describe('Searching', () => {
     test('finds all files', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
