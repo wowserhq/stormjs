@@ -18,6 +18,22 @@ class MPQ {
     }
   }
 
+  hasFile(fileName) {
+    this._ensureHandle();
+
+    if (StormLib.SFileHasFile(this.handle, fileName)) {
+      return true;
+    } else {
+      const errno = StormLib.GetLastError();
+
+      if (errno === StormLib.ERROR_FILE_NOT_FOUND) {
+        return false;
+      } else {
+        throw new Error(`File presence check failed (error ${errno})`);
+      }
+    }
+  }
+
   search(mask, listfile = '') {
     this._ensureHandle();
 
