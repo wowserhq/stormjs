@@ -35,17 +35,17 @@ class MPQ {
   }
 
   openFile(fileName) {
-    if (this.handle) {
-      const fileHandle = new StormLib.VoidPtr();
+    this._ensureHandle();
 
-      if (StormLib.SFileOpenFileEx(this.handle, fileName, 0, fileHandle)) {
-        return new File(fileHandle);
-      } else {
-        fileHandle.delete();
+    const fileHandle = new StormLib.VoidPtr();
 
-        const errno = StormLib.GetLastError();
-        throw new Error(`File could not be opened (error ${errno})`);
-      }
+    if (StormLib.SFileOpenFileEx(this.handle, fileName, 0, fileHandle)) {
+      return new File(fileHandle);
+    } else {
+      fileHandle.delete();
+
+      const errno = StormLib.GetLastError();
+      throw new Error(`File could not be opened (error ${errno})`);
     }
   }
 

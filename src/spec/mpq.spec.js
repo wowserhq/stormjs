@@ -68,14 +68,12 @@ describe('MPQ', () => {
       mpq.close();
     });
 
-    test('returns undefined if opening file from closed MPQ', async () => {
+    test('throws if opening file from closed MPQ', async () => {
       const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
 
       mpq.close();
 
-      const file = mpq.openFile('fixture.txt');
-
-      expect(file).toBeUndefined();
+      expect(() => mpq.openFile('fixture.txt')).toThrow(Error);
     });
 
     test('throws if opening nonexistent file', async () => {
