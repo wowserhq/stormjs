@@ -41,6 +41,7 @@ describe('MPQ', () => {
 
       expect(() => mpq.close()).toThrow(Error);
 
+      invalidHandle.delete();
       mpq.handle = originalHandle;
       mpq.close();
     });
@@ -199,6 +200,7 @@ describe('MPQ', () => {
 
       expect(() => mpq.search('*')).toThrow(Error);
 
+      invalidHandle.delete();
       mpq.handle = originalHandle;
       mpq.close();
     });

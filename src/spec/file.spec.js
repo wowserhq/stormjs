@@ -52,6 +52,7 @@ describe('File', () => {
 
       expect(() => file.close()).toThrow(Error);
 
+      invalidHandle.delete();
       file.handle = originalHandle;
       file.close();
       mpq.close();
@@ -123,6 +124,7 @@ describe('File', () => {
 
       expect(() => { file.pos = 1; }).toThrow(Error);
 
+      invalidHandle.delete();
       file.handle = originalHandle;
       file.close();
       mpq.close();
@@ -165,6 +167,7 @@ describe('File', () => {
 
       expect(() => file.size).toThrow(Error);
 
+      invalidHandle.delete();
       file.handle = originalHandle;
       file.close();
       mpq.close();
@@ -280,6 +283,7 @@ describe('File', () => {
       source.on('error', (error) => {
         expect(error).toBeInstanceOf(Error);
 
+        invalidHandle.delete();
         file.handle = originalHandle;
         file.close();
         mpq.close();
@@ -307,6 +311,7 @@ describe('File', () => {
       source.on('error', (error) => {
         expect(error).toBeInstanceOf(Error);
 
+        invalidHandle.delete();
         file.handle = originalHandle;
         file.close();
         mpq.close();
@@ -378,6 +383,7 @@ describe('File', () => {
 
       expect(() => file.read()).toThrow(Error);
 
+      invalidHandle.delete();
       file.handle = originalHandle;
       file.close();
       mpq.close();
