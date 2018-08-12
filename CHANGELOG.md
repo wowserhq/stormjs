@@ -1,12 +1,13 @@
 # Changelog
 
-## [Unreleased]
+## Unreleased
 
 ### Added
 
 - File searching
 - File opening and closing
 - File reading
+- MPQ patching
 
 ### Changed
 
