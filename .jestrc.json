@@ -1,5 +1,8 @@
 {
   "collectCoverage": true,
+  "collectCoverageFrom": [
+    "src/lib/**/*.{js,mjs}"
+  ],
   "coverageDirectory": "./coverage/",
   "moduleFileExtensions": ["js", "mjs"],
   "moduleNameMapper": {
