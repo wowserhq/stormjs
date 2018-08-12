@@ -19,31 +19,6 @@ describe('MPQ', () => {
       expect(mpq).toBeInstanceOf(MPQ);
     });
 
-    test('patches MPQ', async () => {
-      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq', 'r');
-      mpq.patch('/fixture/size.mpq');
-
-      const result1 = mpq.hasFile('fixture.txt');
-      const result2 = mpq.hasFile('fixture-64kb.txt');
-
-      expect(result1).toBe(true);
-      expect(result2).toBe(true);
-
-      mpq.close();
-    });
-
-    test('throws if patching MPQ with nonexistent MPQ', async () => {
-      expect.assertions(1);
-
-      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq', 'r');
-
-      try {
-        mpq.patch('/fixture/nonexistent.mpq');
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-      }
-    });
-
     test('throws if opening nonexistent MPQ', async () => {
       expect.assertions(1);
 
@@ -79,6 +54,29 @@ describe('MPQ', () => {
       const result = mpq.close();
 
       expect(result).toBeUndefined();
+    });
+  });
+
+  describe('Patching', () => {
+    test('patches MPQ', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq', 'r');
+      mpq.patch('/fixture/size.mpq');
+
+      const result1 = mpq.hasFile('fixture.txt');
+      const result2 = mpq.hasFile('fixture-64kb.txt');
+
+      expect(result1).toBe(true);
+      expect(result2).toBe(true);
+
+      mpq.close();
+    });
+
+    test('throws if patching MPQ with nonexistent MPQ', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq', 'r');
+
+      expect(() => mpq.patch('/fixture/nonexistent.mpq')).toThrow(Error);
+
+      mpq.close();
     });
   });
 
