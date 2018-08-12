@@ -1,6 +1,6 @@
 {
   "name": "@wowserhq/stormjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "StormLib for Javascript, powered by Emscripten",
   "main": "dist/index",
   "files": [
