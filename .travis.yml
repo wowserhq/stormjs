@@ -20,7 +20,7 @@ matrix:
         - source ./.travis/setup-code-climate.sh
 
     - os: linux
-      node_js: '9'
+      node_js: '10'
       before_install:
         - source ./.travis/prepare-linux.sh
         - source ./.travis/prepare-emscripten.sh
