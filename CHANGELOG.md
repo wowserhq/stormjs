@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 - 2018-08-12
 
 ### Added
 
@@ -14,7 +14,7 @@
 - Upgrade to emscripten 1.38.11
 - Improve test suites
 
-## 0.0.1 - 2018-01-15
+## 0.1.0 - 2018-01-15
 
 ### Added
 
