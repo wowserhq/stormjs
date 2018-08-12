@@ -49,6 +49,15 @@ class MPQ {
     }
   }
 
+  patch(path, prefix = '') {
+    this._ensureHandle();
+
+    if (!StormLib.SFileOpenPatchArchive(this.handle, path, prefix, 0)) {
+      const errno = StormLib.GetLastError();
+      throw new Error(`Patch failed (error ${errno})`);
+    }
+  }
+
   search(mask, listfile = '') {
     this._ensureHandle();
 
@@ -91,8 +100,14 @@ class MPQ {
     }
   }
 
-  static async open(path, flags = 0) {
+  static async open(path, mode = '') {
     await StormLib.ready;
+
+    let flags = 0;
+
+    if (mode === 'r') {
+      flags |= StormLib.STREAM_FLAG_READ_ONLY;
+    }
 
     const handle = new StormLib.VoidPtr();
     const priority = 0;

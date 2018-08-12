@@ -116,6 +116,10 @@ bool EmSFileOpenArchive(const std::string& sMpqName, uint32_t uPriority, uint32_
   return SFileOpenArchive(sMpqName.c_str(), uPriority, uFlags, &pMpq.ptr);
 }
 
+bool EmSFileOpenPatchArchive(EmPtr& pMpq, const std::string& sMpqName, const std::string& sPatchPathPrefix, uint32_t uFlags) {
+  return SFileOpenPatchArchive(pMpq.ptr, sMpqName.c_str(), sPatchPathPrefix.c_str(), uFlags);
+}
+
 bool EmSFileOpenFileEx(EmPtr& pMpq, const std::string& sFileName, uint32_t uSearchScope, EmPtr& pFile) {
   return SFileOpenFileEx(pMpq.ptr, sFileName.c_str(), uSearchScope, &pFile.ptr);
 }
@@ -169,6 +173,7 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
   function("SFileGetFileSize", &EmSFileGetFileSize);
   function("SFileHasFile", &EmSFileHasFile);
   function("SFileOpenArchive", &EmSFileOpenArchive);
+  function("SFileOpenPatchArchive", &EmSFileOpenPatchArchive);
   function("SFileOpenFileEx", &EmSFileOpenFileEx);
   function("SFileReadFile", &EmSFileReadFile);
   function("SFileSetFilePointer", &EmSFileSetFilePointer);
@@ -177,4 +182,5 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
   constant("ERROR_NO_MORE_FILES", ERROR_NO_MORE_FILES);
   constant("FILE_BEGIN", FILE_BEGIN);
   constant("SFILE_INVALID_SIZE", SFILE_INVALID_SIZE);
+  constant("STREAM_FLAG_READ_ONLY", STREAM_FLAG_READ_ONLY);
 }
