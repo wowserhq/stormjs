@@ -98,7 +98,7 @@ async function buildDebug(buildRoot, distDir) {
 
   const cmakeFlags = [
     '-DBUILD_SHARED_LIBS=1',
-    '-DCMAKE_BUILD_TYPE=Debug'
+    '-DCMAKE_BUILD_TYPE=Release'
   ];
 
   const { cmakeOut, cmakeErr } = await emcmake(cmakeFlags, './StormLib');
