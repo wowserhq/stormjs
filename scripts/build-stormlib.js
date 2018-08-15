@@ -137,6 +137,7 @@ async function buildDebug(buildRoot, distDir) {
     '-s ALLOW_MEMORY_GROWTH=1',
     '-s SINGLE_FILE=1',
     '-s MODULARIZE=1',
+    '-s DEMANGLE_SUPPORT=1',
     '-s EXPORT_NAME="\'StormLib\'"',
     '-s EXTRA_EXPORTED_RUNTIME_METHODS="[\'FS\']"',
     '-o stormlib.debug.js'
