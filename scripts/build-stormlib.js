@@ -98,7 +98,7 @@ async function buildDebug(buildRoot, distDir) {
 
   const cmakeFlags = [
     '-DBUILD_SHARED_LIBS=1',
-    '-DCMAKE_BUILD_TYPE=Debug'
+    '-DCMAKE_BUILD_TYPE=Release'
   ];
 
   const { cmakeOut, cmakeErr } = await emcmake(cmakeFlags, './StormLib');
@@ -133,10 +133,12 @@ async function buildDebug(buildRoot, distDir) {
 
   const wasmCompileFlags = sharedCompileFlags.concat([
     '--bind',
+    '--post-js ../../src/binding/post.js',
     '-s WASM=1',
     '-s ALLOW_MEMORY_GROWTH=1',
     '-s SINGLE_FILE=1',
     '-s MODULARIZE=1',
+    '-s DEMANGLE_SUPPORT=1',
     '-s EXPORT_NAME="\'StormLib\'"',
     '-s EXTRA_EXPORTED_RUNTIME_METHODS="[\'FS\']"',
     '-o stormlib.debug.js'
@@ -201,6 +203,7 @@ async function buildRelease(buildRoot, distDir) {
 
   const wasmCompileFlags = sharedCompileFlags.concat([
     '--bind',
+    '--post-js ../../src/binding/post.js',
     '-s WASM=1',
     '-s ALLOW_MEMORY_GROWTH=1',
     '-s SINGLE_FILE=1',
