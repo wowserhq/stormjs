@@ -133,6 +133,7 @@ async function buildDebug(buildRoot, distDir) {
 
   const wasmCompileFlags = sharedCompileFlags.concat([
     '--bind',
+    '--post-js ../../src/binding/post.js',
     '-s WASM=1',
     '-s ALLOW_MEMORY_GROWTH=1',
     '-s SINGLE_FILE=1',
@@ -202,6 +203,7 @@ async function buildRelease(buildRoot, distDir) {
 
   const wasmCompileFlags = sharedCompileFlags.concat([
     '--bind',
+    '--post-js ../../src/binding/post.js',
     '-s WASM=1',
     '-s ALLOW_MEMORY_GROWTH=1',
     '-s SINGLE_FILE=1',
