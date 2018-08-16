@@ -27,7 +27,7 @@ npm install @wowserhq/stormjs
 To use StormJS in an ES2015 module environment:
 
 ```js
-import { FS, MPQ } from '@wowserhq/math';
+import { FS, MPQ } from '@wowserhq/stormjs';
 
 // Mount the local filesystem path /home/wowserhq/example as /stormjs
 // This approach is suitable for cases where StormJS is running under Node
