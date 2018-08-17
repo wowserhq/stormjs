@@ -58,6 +58,29 @@ class EmBuf {
     }
 };
 
+class EmStr {
+  public:
+    uint32_t size;
+    char* ptr;
+
+    EmStr(uint32_t s) {
+      size = s;
+      ptr = new char[s];
+    }
+
+    ~EmStr() {
+      delete ptr;
+    }
+
+    uint32_t getSize() const {
+      return size;
+    }
+
+    val toJS() {
+      return val(std::string(ptr));
+    }
+};
+
 bool EmSFileCloseArchive(EmPtr& pMpq) {
   return SFileCloseArchive(pMpq.ptr);
 }
@@ -104,6 +127,10 @@ bool EmSFileFindNextFile(EmPtr& pFind, SFILE_FIND_DATA& pFindFileData) {
   return SFileFindNextFile(pFind.ptr, &pFindFileData);
 }
 
+bool EmSFileGetFileName(EmPtr& pFile, EmStr& sName) {
+  return SFileGetFileName(pFile.ptr, sName.ptr);
+}
+
 uint32_t EmSFileGetFileSize(EmPtr& pFile, EmPtr& pFileSizeHigh) {
   return SFileGetFileSize(pFile.ptr, static_cast<uint32_t*>(pFileSizeHigh.ptr));
 }
@@ -143,6 +170,11 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
     .function("getAddr", &EmPtr::getAddr)
     .function("isNull", &EmPtr::isNull);
 
+  class_<EmStr>("Str")
+    .constructor<uint32_t>()
+    .function("getSize", &EmStr::getSize)
+    .function("toJS", &EmStr::toJS);
+
   class_<EmVoidPtr, base<EmPtr>>("VoidPtr")
     .constructor();
 
@@ -170,6 +202,7 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
   function("SFileFindClose", &EmSFileFindClose);
   function("SFileFindFirstFile", &EmSFileFindFirstFile);
   function("SFileFindNextFile", &EmSFileFindNextFile);
+  function("SFileGetFileName", &EmSFileGetFileName);
   function("SFileGetFileSize", &EmSFileGetFileSize);
   function("SFileHasFile", &EmSFileHasFile);
   function("SFileOpenArchive", &EmSFileOpenArchive);
@@ -181,6 +214,7 @@ EMSCRIPTEN_BINDINGS(EmStormLib) {
   constant("ERROR_FILE_NOT_FOUND", ERROR_FILE_NOT_FOUND);
   constant("ERROR_NO_MORE_FILES", ERROR_NO_MORE_FILES);
   constant("FILE_BEGIN", FILE_BEGIN);
+  constant("MAX_PATH", MAX_PATH);
   constant("SFILE_INVALID_SIZE", SFILE_INVALID_SIZE);
   constant("STREAM_FLAG_READ_ONLY", STREAM_FLAG_READ_ONLY);
 }
