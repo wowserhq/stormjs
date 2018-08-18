@@ -1,9 +1,9 @@
-import { Readable } from 'stream';
+import Stream from 'stream';
 import StormLib from '../stormlib';
 
 const STREAM_CHUNK_SIZE = 64 * 1024;
 
-class FileStream extends Readable {
+class FileStream extends Stream.Readable {
   constructor(file) {
     super({
       highWaterMark: STREAM_CHUNK_SIZE
