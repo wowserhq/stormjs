@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 - 2018-08-17
+
+### Added
+
+- File name getter
 
 ### Fixed
 
