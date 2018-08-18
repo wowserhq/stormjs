@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- Fix issue loading MPQs >= 2GB
+- Fix incompatibility with ES module support in Node
+
+### Changed
+
+- Improve README
+
 ## 0.2.0 - 2018-08-12
 
 ### Added
