@@ -388,5 +388,57 @@ describe('File', () => {
       file.close();
       mpq.close();
     });
+
+    test('gets name for valid file', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+      const file = mpq.openFile('fixture.txt');
+
+      const name = file.name;
+
+      expect(name).toBe('fixture.txt');
+
+      file.close();
+      mpq.close();
+    });
+
+    test('gets name for valid file with repeated calls', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+      const file = mpq.openFile('fixture.txt');
+
+      const name1 = file.name;
+      const name2 = file.name;
+
+      expect(name1).toBe(name2);
+
+      file.close();
+      mpq.close();
+    });
+
+    test('throws if getting name for closed file', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+      const file = mpq.openFile('fixture.txt');
+      file.close();
+
+      expect(() => { const name = file.name; }).toThrow(Error);
+
+      mpq.close();
+    });
+
+    test('throws if getting name for file with invalid handle', async () => {
+      const mpq = await MPQ.open('/fixture/vanilla-standard.mpq');
+      const file = mpq.openFile('fixture.txt');
+
+      const originalHandle = file.handle;
+      const invalidHandle = new StormLib.VoidPtr();
+
+      file.handle = invalidHandle;
+
+      expect(() => { const name = file.name; }).toThrow(Error);
+
+      invalidHandle.delete();
+      file.handle = originalHandle;
+      file.close();
+      mpq.close();
+    });
   });
 });

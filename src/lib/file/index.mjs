@@ -6,7 +6,23 @@ class File {
     this.handle = handle;
     this.data = null;
 
+    this._name = null;
     this._pos = 0;
+  }
+
+  get name() {
+    this._ensureHandle();
+
+    if (!this._name) {
+      this._name = new StormLib.Str(StormLib.MAX_PATH);
+    }
+
+    if (StormLib.SFileGetFileName(this.handle, this._name)) {
+      return this._name.toJS();
+    } else {
+      const errno = StormLib.GetLastError();
+      throw new Error(`File name could not be read (error ${errno})`);
+    }
   }
 
   get pos() {
@@ -50,6 +66,11 @@ class File {
         if (this.data) {
           this.data.delete();
           this.data = null;
+        }
+
+        if (this._name) {
+          this._name.delete();
+          this._name = null;
         }
       } else {
         const errno = StormLib.GetLastError();
