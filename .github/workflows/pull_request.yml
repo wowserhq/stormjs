@@ -29,16 +29,10 @@ jobs:
           emsdk activate 1.39.15
           emsdk uninstall node-12.9.1-64bit
           emsdk install node-12.9.1-64bit
-          env
           echo "::set-env name=EM_CONFIG::$EM_CONFIG"
           echo "::set-env name=EM_CACHE::$EM_CACHE"
           echo "::add-path::$HOME/emsdk-master"
           echo "::add-path::$HOME/emsdk-master/upstream/emscripten"
-
-      - run: |
-          echo $PATH
-          echo $EM_CONFIG
-          echo $EM_CACHE
 
       - run: npm install
 
