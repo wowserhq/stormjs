@@ -20,7 +20,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: |
+      - name: Use Emscripten 1.39.15
+        run: |
           wget https://codeload.github.com/emscripten-core/emsdk/zip/master -O ~/emsdk-master.zip
           unzip ~/emsdk-master.zip -d ~/
           source ~/emsdk-master/emsdk_env.sh
