@@ -1,0 +1,39 @@
+name: Pull Request
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: wget https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz -P ~/
+
+      - run: tar -xvf ~/emsdk-portable.tar.gz -C ~/
+
+      - run: source ~/emsdk-portable/emsdk_env.sh
+
+      - run: emsdk update
+
+      - run: emsdk install 1.39.15 && emsdk activate 1.39.15
+
+      - run: emsdk uninstall node-12.9.1-64bit && emsdk install node-12.9.1-64bit
+
+      - run: source ~/emsdk-portable/emsdk_env.sh
+
+      - run: npm install
+
+      - run: npm test
+        env:
+          CI: true
