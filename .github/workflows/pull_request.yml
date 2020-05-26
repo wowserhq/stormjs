@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -18,11 +18,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: wget https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz -P ~/
+      - run: wget https://codeload.github.com/emscripten-core/emsdk/zip/master -P ~/
 
-      - run: tar -xvf ~/emsdk-portable.tar.gz -C ~/
+      - run: unzip ~/emsdk-master.zip
 
-      - run: source ~/emsdk-portable/emsdk_env.sh
+      - run: source ~/emsdk-master/emsdk_env.sh
 
       - run: emsdk update
 
@@ -30,7 +30,7 @@ jobs:
 
       - run: emsdk uninstall node-12.9.1-64bit && emsdk install node-12.9.1-64bit
 
-      - run: source ~/emsdk-portable/emsdk_env.sh
+      - run: source ~/emsdk-master/emsdk_env.sh
 
       - run: npm install
 
