@@ -1,0 +1,42 @@
+name: Pull Request
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Use Emscripten 1.39.15
+        run: |
+          wget https://codeload.github.com/emscripten-core/emsdk/zip/master -O ~/emsdk-master.zip
+          unzip ~/emsdk-master.zip -d ~/
+          source ~/emsdk-master/emsdk_env.sh
+          emsdk update
+          emsdk install 1.39.15
+          emsdk activate 1.39.15
+          emsdk uninstall node-12.9.1-64bit
+          emsdk install node-12.9.1-64bit
+          echo "::set-env name=EM_CONFIG::$EM_CONFIG"
+          echo "::set-env name=EM_CACHE::$EM_CACHE"
+          echo "::add-path::$HOME/emsdk-master"
+          echo "::add-path::$HOME/emsdk-master/upstream/emscripten"
+
+      - run: npm install
+
+      - run: npm test
+        env:
+          CI: true
