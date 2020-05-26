@@ -20,13 +20,7 @@ jobs:
 
       - run: wget https://codeload.github.com/emscripten-core/emsdk/zip/master -O ~/emsdk-master.zip
 
-      - run: unzip ~/emsdk-master.zip
-
-      - run: ls -las
-
-      - run: ls -las ~/
-
-      - run: ls -las ~/emsdk-master/
+      - run: unzip ~/emsdk-master.zip -d ~/
 
       - run: source ~/emsdk-master/emsdk_env.sh
 
