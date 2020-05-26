@@ -22,6 +22,12 @@ jobs:
 
       - run: unzip ~/emsdk-master.zip
 
+      - run: ls -las
+
+      - run: ls -las ~/
+
+      - run: ls -las ~/emsdk-master/
+
       - run: source ~/emsdk-master/emsdk_env.sh
 
       - run: emsdk update
