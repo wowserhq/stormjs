@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: wget https://codeload.github.com/emscripten-core/emsdk/zip/master -P ~/
+      - run: wget https://codeload.github.com/emscripten-core/emsdk/zip/master -O ~/emsdk-master.zip
 
       - run: unzip ~/emsdk-master.zip
 
