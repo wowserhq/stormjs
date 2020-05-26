@@ -141,11 +141,12 @@ async function buildDebug(buildRoot, distDir) {
     '-s DEMANGLE_SUPPORT=1',
     '-s EXPORT_NAME="\'StormLib\'"',
     '-s EXTRA_EXPORTED_RUNTIME_METHODS="[\'FS\']"',
+    '-l nodefs.js',
     '-o stormlib.debug.js'
   ]);
 
   const wasmFiles = [
-    'libstorm.so',
+    'libstorm.a',
     'EmStormLib.bc'
   ];
 
@@ -210,11 +211,12 @@ async function buildRelease(buildRoot, distDir) {
     '-s MODULARIZE=1',
     '-s EXPORT_NAME="\'StormLib\'"',
     '-s EXTRA_EXPORTED_RUNTIME_METHODS="[\'FS\']"',
+    '-l nodefs.js',
     '-o stormlib.release.js'
   ]);
 
   const wasmFiles = [
-    'libstorm.so',
+    'libstorm.a',
     'EmStormLib.bc'
   ];
 

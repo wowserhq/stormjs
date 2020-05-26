@@ -57,7 +57,7 @@ Development of StormJS requires git, CMake, and an Emscripten environment.
 
 [emsdk](https://github.com/juj/emsdk) is the simplest way to get an Emscripten environment up and running.
 
-StormJS is currently built using Emscripten 1.38.11.
+StormJS is currently built using Emscripten 1.39.15.
 
 After cloning the StormJS repo, ensure all submodules are also pulled down from remote by running:
 
