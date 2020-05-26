@@ -211,6 +211,7 @@ async function buildRelease(buildRoot, distDir) {
     '-s MODULARIZE=1',
     '-s EXPORT_NAME="\'StormLib\'"',
     '-s EXTRA_EXPORTED_RUNTIME_METHODS="[\'FS\']"',
+    '-l nodefs.js',
     '-o stormlib.release.js'
   ]);
 
