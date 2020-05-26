@@ -22,15 +22,28 @@ jobs:
 
       - run: unzip ~/emsdk-master.zip -d ~/
 
-      - run: source ~/emsdk-master/emsdk_env.sh
+      - run: |
+          source ~/emsdk-master/emsdk_env.sh
+          echo "::set-env name=EM_CONFIG::$EM_CONFIG"
+          echo "::set-env name=EM_CACHE::$EM_CACHE"
+          echo "::add-path::~/emsdk-master"
+          echo "::add-path::~/emsdk-master/upstream/emscripten"
 
-      - run: emsdk update
+      - run: |
+          emsdk update
+          emsdk install 1.39.15
+          emsdk activate 1.39.15
 
-      - run: emsdk install 1.39.15 && emsdk activate 1.39.15
+      - run: |
+          emsdk uninstall node-12.9.1-64bit
+          emsdk install node-12.9.1-64bit
 
-      - run: emsdk uninstall node-12.9.1-64bit && emsdk install node-12.9.1-64bit
-
-      - run: source ~/emsdk-master/emsdk_env.sh
+      - run: |
+          source ~/emsdk-master/emsdk_env.sh
+          echo "::set-env name=EM_CONFIG::$EM_CONFIG"
+          echo "::set-env name=EM_CACHE::$EM_CACHE"
+          echo "::add-path::~/emsdk-master"
+          echo "::add-path::~/emsdk-master/upstream/emscripten"
 
       - run: npm install
 
