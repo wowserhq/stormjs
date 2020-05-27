@@ -6,7 +6,7 @@ module.exports = {
           '@babel/preset-env',
           {
             targets: {
-              node: '8.11',
+              node: '10',
             },
           },
         ],
@@ -19,7 +19,7 @@ module.exports = {
           '@babel/preset-env',
           {
             targets: {
-              node: '8.11',
+              node: '10',
               browsers: ['last 2 versions', 'not ie 1-11', 'not android > 0'],
             },
             modules: false,
@@ -34,7 +34,7 @@ module.exports = {
           '@babel/preset-env',
           {
             targets: {
-              node: '8.11',
+              node: '10',
             },
           },
         ],
