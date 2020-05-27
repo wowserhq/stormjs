@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/wowserhq/stormjs/compare/v0.4.0...v0.4.1) (2020-05-27)
+
+
+### Bug Fixes
+
+* use explicit file extensions with es modules ([d8c2236](https://github.com/wowserhq/stormjs/commit/d8c223651ad277f41bda1068af26e970d9fe6e41))
+
 ## [0.4.0](https://github.com/wowserhq/stormjs/compare/v0.3.0...v0.4.0) (2020-05-27)
 
 
