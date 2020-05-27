@@ -47,7 +47,7 @@ Note that StormJS loads in production mode if `NODE_ENV` is set to `production`.
 
 ## Compatibility
 
-StormJS is tested against Node 8 and Node 10.
+StormJS is tested against Node 10, 12, and 14.
 
 Additionally, StormJS should work well in browsers with support for WASM. Note that use in browsers will require configuring an Emscripten filesystem type appropriate for the browser.
 
