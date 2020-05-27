@@ -13,7 +13,6 @@
     "build:esm": "BABEL_ENV=esm babel src/lib/ --out-dir dist/ --keep-file-extension",
     "clean": "node scripts/clean.js",
     "lint": "eslint . --ext js,mjs",
-    "precommit": "npm run lint",
     "prepare": "npm run build",
     "prepublishOnly": "npm run lint && npm run test",
     "release:major": "npm run clean && npm version major && npm publish && git push --follow-tags",
@@ -41,7 +40,7 @@
     "eslint-config-wowser-base": "0.2.0",
     "eslint-plugin-import": "2.13.0",
     "fs-extra": "7.0.0",
-    "husky": "0.14.3",
+    "husky": "4.2.5",
     "jest": "26.0.1"
   }
 }
