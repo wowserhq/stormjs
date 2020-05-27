@@ -17,6 +17,21 @@ module.exports = {
           },
         ],
       ],
+      plugins: [
+        [
+          'module-resolver',
+          {
+            resolvePath: (sourcePath) => {
+              // Drop .mjs extensions in commonjs output
+              if (sourcePath.endsWith('.mjs')) {
+                return sourcePath.replace(/\.mjs$/, '');
+              }
+
+              return sourcePath;
+            },
+          },
+        ],
+      ],
     },
 
     esm: {
