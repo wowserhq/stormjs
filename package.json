@@ -4,6 +4,10 @@
   "description": "StormLib for Javascript, powered by Emscripten",
   "main": "dist/index",
   "module": "dist/index.mjs",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js"
+  },
   "files": [
     "dist"
   ],
