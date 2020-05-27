@@ -19,7 +19,7 @@
     "release:major": "npm run clean && npm version major && npm publish && git push --follow-tags",
     "release:minor": "npm run clean && npm version minor && npm publish && git push --follow-tags",
     "release:patch": "npm run clean && npm version patch && npm publish && git push --follow-tags",
-    "test": "jest --config .jestrc.json"
+    "test": "jest"
   },
   "repository": "github:wowserhq/stormjs",
   "keywords": [
