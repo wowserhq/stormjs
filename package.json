@@ -19,9 +19,7 @@
     "clean": "node scripts/clean.js",
     "lint": "eslint . --ext js,mjs",
     "prepublishOnly": "npm run lint && npm run clean && npm run build && npm run test",
-    "release:major": "npm version major && npm publish && git push --follow-tags",
-    "release:minor": "npm version minor && npm publish && git push --follow-tags",
-    "release:patch": "npm version patch && npm publish && git push --follow-tags",
+    "release": "standard-version",
     "test": "jest"
   },
   "repository": "github:wowserhq/stormjs",
@@ -49,6 +47,7 @@
     "fs-extra": "7.0.0",
     "husky": "4.2.5",
     "jest": "26.0.1",
-    "lint-staged": "10.2.6"
+    "lint-staged": "10.2.6",
+    "standard-version": "8.0.0"
   }
 }
