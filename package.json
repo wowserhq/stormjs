@@ -41,6 +41,7 @@
     "eslint-plugin-import": "2.13.0",
     "fs-extra": "7.0.0",
     "husky": "4.2.5",
-    "jest": "26.0.1"
+    "jest": "26.0.1",
+    "lint-staged": "10.2.6"
   }
 }
