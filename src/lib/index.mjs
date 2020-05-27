@@ -1,6 +1,6 @@
-import File from './file';
-import MPQ from './mpq';
-import StormLib from './stormlib';
+import File from './file/index.mjs';
+import MPQ from './mpq.mjs';
+import StormLib from './stormlib.js';
 
 const FS = StormLib.FS;
 

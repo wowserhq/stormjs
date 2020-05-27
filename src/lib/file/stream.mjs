@@ -1,5 +1,5 @@
 import Stream from 'stream';
-import StormLib from '../stormlib';
+import StormLib from '../stormlib.js';
 
 const STREAM_CHUNK_SIZE = 64 * 1024;
 

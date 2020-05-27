@@ -1,5 +1,5 @@
-import FileStream from './stream';
-import StormLib from '../stormlib';
+import FileStream from './stream.mjs';
+import StormLib from '../stormlib.js';
 
 class File {
   constructor(handle) {

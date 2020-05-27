@@ -1,5 +1,5 @@
-import File from './file';
-import StormLib from './stormlib';
+import File from './file/index.mjs';
+import StormLib from './stormlib.js';
 
 class MPQ {
   constructor(handle) {
