@@ -7,6 +7,12 @@ module.exports = {
           {
             targets: {
               node: '10',
+              browsers: [
+                'last 2 versions',
+                'not ie 1-11',
+                'not ie_mob > 0',
+                'not android > 0'
+              ],
             },
           },
         ],
@@ -20,7 +26,12 @@ module.exports = {
           {
             targets: {
               node: '10',
-              browsers: ['last 2 versions', 'not ie 1-11', 'not android > 0'],
+              browsers: [
+                'last 2 versions',
+                'not ie 1-11',
+                'not ie_mob > 0',
+                'not android > 0'
+              ],
             },
             modules: false,
           },
